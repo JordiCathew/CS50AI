@@ -1,0 +1,60 @@
+Quiz - Optimization
+
+1- 
+For which of the following will you always find the same solution, even if you re-run
+the algorithm multiple times?
+*
+Assume a problem where the goal is to minimize a cost function, and every state in 
+the state space has a different cost.
+
+1- No, if we rerun it multiple times, each time starting from a different state, we
+   can get stucked in a local minimum in one run and in other find the actual
+   global minimum for example. 
+2-This one will always throw the same solution, since steepest-ascent in the case of minimizing a cost function will always pick the lowest-valued neighbor,
+  and since we always start from the same state the solution will not change.
+3- No, if we re-run it multiple times, each time starting from a different state, we can also get stucked in a local minimum in one run since it will choose
+   one of the lowest valued neighbors randomly, so in one run we may go left for example and find the global minimum and in other get stucked in a local 
+   minimum. 
+4- Again, no, imagine we re-run it multiple times, each time starting from the same state, if we suppose that our global minimum is at right and a 
+   local minimum is at the left, and we start in the middle, in one run it may get stucked in the local minimum and in another it may get the global minimum
+   since it will choose randomly from its lowest-valued neighbors.
+5- No
+6- No
+7- No
+
+2- 
+C1 = represents the number of acres of Crop 1 to plant, C2 = represents the number of acres of Crop 2 to plant
+500C1 + 400C2 
+
+3-
+
+1- 3C1 + 2C2 <= 12
+   C1 <= 10
+   C2 <= 4
+   	
+2-
+3-
+4-
+
+4- C Must be monday, so we discard some options:
+
+	1-No
+	2- Yea
+	3- No
+	4-No
+	5-No
+	6- No
+	
+
+
+
+
+
+
+
+
+
+
+
+
+
