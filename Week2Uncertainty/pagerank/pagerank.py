@@ -57,7 +57,7 @@ def transition_model(corpus, page, damping_factor):
     linked to by `page`. With probability `1 - damping_factor`, choose
     a link at random chosen from all pages in the corpus.
     """
-    probability_destribution = dict()
+    probability_destribution = {keys: 0 for keys in corpus}
 
     # If page has no outgoing links, we pretend it has links to all pages in
     # the corpus, including itself.We assume that the PageRank of every page
@@ -67,22 +67,18 @@ def transition_model(corpus, page, damping_factor):
         for pages in corpus:
             probability_destribution[pages] =  1 / len(corpus)
         return probability_destribution
-    else:        
-        #We add all pages to the prob. dest. and their probabilities.
-        probability_destribution.update([(key, 0) for key in corpus])
-
+    else:       
         for pages in probability_destribution:
             # With probability 1 - damping_factor, we must divide (1 - damp.
             # fact.) by the number of pages in the corpus.
             # probability_random = (1 - damping_factor) / len(corpus)
-            probability_destribution[pages] += ((1 - damping_factor) / len(corpus))
+            probability_destribution[pages] += (1 - damping_factor) / len(corpus)
 
             if pages in corpus[page]:
                 # With probability damping_factor, We must divide damp. fact.
                 # by the number of links associated to the current page.
                 # probability_damping_factor = damping_factor / len(corpus[page])
-                probability_destribution[pages] += (damping_factor / len(corpus[page]))
-        
+                probability_destribution[pages] += damping_factor / len(corpus[page])
     return probability_destribution
 
 def sample_pagerank(corpus, damping_factor, n):
@@ -118,19 +114,21 @@ def sample_pagerank(corpus, damping_factor, n):
         # For every transition model of every sample we check the probability
         # of the user clicking each page and according to that probability
         # we choose the most likely and we sum one to its respective count.
+        percentage = 0
         for key, value in transition_models.items():
-            percentage = value 
+            percentage += value 
             random_number = random.random()
             if random_number <= percentage:
                 counts[key] += 1
                 iterative_sample = key
+                break
 
     # Now we must divide these counts by the number of samples to get
     # our pagerank, and finally we copy the results to the estimated_pagerank.
     for key, value in counts.items():
         percentage = value / n 
         estimated_pagerank[key] = percentage
-
+    print("Sample: ", sum(estimated_pagerank.values()))
     return estimated_pagerank
 
 
@@ -194,6 +192,7 @@ def iterate_pagerank(corpus, damping_factor):
             else:
                 var = False
                 continue
+    print("Iteration: ", sum(estimated_pagerank.values()))
     return estimated_pagerank
 
 

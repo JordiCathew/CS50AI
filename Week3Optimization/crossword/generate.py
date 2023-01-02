@@ -247,7 +247,7 @@ class CrosswordCreator():
         sorted_values = sorted(list_of_values.items(), key=lambda item: item[1])
         sorted_values = [key for key, value in sorted_values]
         return sorted_values
-        # Returning in albitrary order:
+        # Returning in arbitrary order:
         #return [x for x in self.domains[var]]
               
     def select_unassigned_variable(self, assignment):
