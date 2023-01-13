@@ -1,0 +1,41 @@
+1. 
+The following question will also ask you about the following four sentences.
+Sentence 1: Cats run.
+Sentence 2: Cats climb trees.
+Sentence 3: Small cats run.
+Sentence 4: Small white cats climb.
+
+Of the four sentences above, which sentences can be derived from the above context-free grammar?
+The first can be derived, the second can't, the third can, the fourth can because remember
+that in a logical or both can be true.
+
+	1. No
+	2. No
+	3. Yes
+	4. No
+	5. No
+	6. No
+	7. No
+	8. No
+
+2.The following question will ask you about a corpus with the following documents.
+Document 1: a a b c
+Document 2: a c c c d e f
+Document 3: a c d d d
+Document 4: a d f
+What is the tf-idf value for "d" in Document 3?
+*
+Round answers to two decimal places. Use the natural logarithm (log base e) when taking a logarithm.
+
+TF = 3, IDF = 0.2876, tf-idf = 3 . 0.2876 = 0.8630
+
+3.
+
+4. In the context of n-grams, the length refers to the number of items in the sequence.
+
+
+
+
+
+
+
