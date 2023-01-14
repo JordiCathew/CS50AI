@@ -9,7 +9,7 @@ that the programs work as intended when you test them.
 
 * [Degrees](https://github.com/JordiCathew/CS50AI/tree/master/Week0Search/degrees)
 
-* [TicTacToe](https://github.com/JordiCathew/CS50AI/tree/master/Week0Search/tictactoe)
+* [Tic-Tac-Toe](https://github.com/JordiCathew/CS50AI/tree/master/Week0Search/tictactoe)
 
 ## Week 1 - Knowledge
 

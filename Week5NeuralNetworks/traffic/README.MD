@@ -1,37 +1,63 @@
-# What did I try?
-To begin with I tried with a structure almost identical to the one used in the source code of handwriting.py, and the results were pathetic-0.05 accuracy- so, I decided
-to add another layer to see if the accuracy improved or if the problem was something else
-than the number of units. 
+# Traffic
 
-Now the accuracy improved by a lot, but I decided to try if I could get to a higher accuracy, but instead of adding another layer (two seemed like they worked fine) I decided to increase the number of filters to read by half of what they previously were (32 previously, 48 after). The accuracy improved, but I thought that I could do better so finally I decided to increase the number of units in the hidden layer by doubling of what they previously were (128 previously, 256 after) but the results were worse that in the previous runs.
+ AI that identifies which traffic sign appears in a photograph.
 
-## What worked well?
-After adding a second the layer the accuracy improved significantly, around 95 percent accuracy, after applying more filters (48 instead of 32), the model improved around 1-2% percent, to 96-97%. After the change of the number of units in the hidden layer the results were around the same 96% or worse, in conclusion: The best model that I could get was the third one: 
-
-```python
-
-        model = tf.keras.models.Sequential([
-            tf.keras.layers.Conv2D(
-                48, (3, 3), activation="relu", input_shape=(IMG_WIDTH, IMG_HEIGHT, 3)
-            ),
-            tf.keras.layers.MaxPooling2D(pool_size=(2, 2)),
-                    
-            tf.keras.layers.Conv2D(
-                48, (3, 3), activation="relu", input_shape=(IMG_WIDTH, IMG_HEIGHT, 3)
-            ),
-            tf.keras.layers.MaxPooling2D(pool_size=(2, 2)),
-
-
-            tf.keras.layers.Flatten(),
-
-            tf.keras.layers.Dense(128, activation="relu"),
-            tf.keras.layers.Dropout(0.5),
-
-
-            tf.keras.layers.Dense(NUM_CATEGORIES, activation="softmax")
-        ])
+ ```bash
+$ py traffic.py gtsrb
+Epoch 1/10
+500/500 [==============================] - 5s 9ms/step - loss: 3.7139 - accuracy: 0.1545
+Epoch 2/10
+500/500 [==============================] - 6s 11ms/step - loss: 2.0086 - accuracy: 0.4082
+Epoch 3/10
+500/500 [==============================] - 6s 12ms/step - loss: 1.3055 - accuracy: 0.5917
+Epoch 4/10
+500/500 [==============================] - 5s 11ms/step - loss: 0.9181 - accuracy: 0.7171
+Epoch 5/10
+500/500 [==============================] - 7s 13ms/step - loss: 0.6560 - accuracy: 0.7974
+Epoch 6/10
+500/500 [==============================] - 9s 18ms/step - loss: 0.5078 - accuracy: 0.8470
+Epoch 7/10
+500/500 [==============================] - 9s 18ms/step - loss: 0.4216 - accuracy: 0.8754
+Epoch 8/10
+500/500 [==============================] - 10s 20ms/step - loss: 0.3526 - accuracy: 0.8946
+Epoch 9/10
+500/500 [==============================] - 10s 21ms/step - loss: 0.3016 - accuracy: 0.9086
+Epoch 10/10
+500/500 [==============================] - 10s 20ms/step - loss: 0.2497 - accuracy: 0.9256
+333/333 - 5s - loss: 0.1616 - accuracy: 0.9535
 ```
 
-## What didn't work well?
-One layer was extremely inefficient, after adding another the results were consistently more
-precise, after adding more units in the hidden layer, the results were worse than in previous runs with less units.
+## Background
+
+As research continues in the development of self-driving cars, one of the key challenges is computer vision, allowing these cars to develop an understanding of their environment from digital images. In particular, this involves the ability to recognize and distinguish road signs – stop signs, speed limit signs, yield signs, and more.
+
+In this project, you’ll use TensorFlow to build a neural network to classify road signs based on an image of those signs. To do so, you’ll need a labeled dataset: a collection of images that have already been categorized by the road sign represented in them.
+
+Several such data sets exist, but for this project, we’ll use the German Traffic Sign Recognition Benchmark (GTSRB) dataset, which contains thousands of images of 43 different kinds of road signs.
+
+## Requirements
+
+You'll need opencv-python for image processing, scikit-learn for ML-related functions, and tensorflow for neural networks.
+You can install all requirements running this:
+
+```bash
+$ pip install -r requirements.txt
+```
+
+or
+
+```bash
+$ py -m pip install -r requirements.txt
+```
+
+## Process
+
+In this project we are also asked to document
+our process, you can check the other README in the 
+Week5 folder.
+
+## Usage
+
+```bash
+$ py traffic.py gtsrb
+```
