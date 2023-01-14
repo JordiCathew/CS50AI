@@ -1,6 +1,6 @@
 # Questions
 
-AI tthat answer questions.
+AI that answers questions.
 
 ```bash
 $ py questions.py corpus
