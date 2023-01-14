@@ -79,6 +79,7 @@ def transition_model(corpus, page, damping_factor):
                 # by the number of links associated to the current page.
                 # probability_damping_factor = damping_factor / len(corpus[page])
                 probability_destribution[pages] += damping_factor / len(corpus[page])
+    #print(probability_destribution)
     return probability_destribution
 
 def sample_pagerank(corpus, damping_factor, n):
@@ -105,7 +106,7 @@ def sample_pagerank(corpus, damping_factor, n):
     iterative_sample = first_sample
     counts[first_sample] += 1
 
-    for i in range(1, n):
+    for i in range(n-1):
         # We pass the previous sample(the first sample first) into our
         # transition_model function, to get the probabilities for the next
         # sample.
@@ -115,9 +116,9 @@ def sample_pagerank(corpus, damping_factor, n):
         # of the user clicking each page and according to that probability
         # we choose the most likely and we sum one to its respective count.
         percentage = 0
+        random_number = random.random()
         for key, value in transition_models.items():
             percentage += value 
-            random_number = random.random()
             if random_number <= percentage:
                 counts[key] += 1
                 iterative_sample = key
@@ -128,7 +129,7 @@ def sample_pagerank(corpus, damping_factor, n):
     for key, value in counts.items():
         percentage = value / n 
         estimated_pagerank[key] = percentage
-    print("Sample: ", sum(estimated_pagerank.values()))
+    print("Sample: ", round(sum(estimated_pagerank.values()), 4))
     return estimated_pagerank
 
 
@@ -141,12 +142,9 @@ def iterate_pagerank(corpus, damping_factor):
     their estimated PageRank value (a value between 0 and 1). All
     PageRank values should sum to 1.
     """
-    estimated_pagerank = dict()
-    old_values = dict()
-
     # We assign each page a rank of 1 / N.
-    estimated_pagerank.update([(key, 1 / len(corpus)) for key in corpus])
-    old_values.update([(key, 0) for key in corpus])
+    estimated_pagerank = {key: 1 / len(corpus) for key in corpus}
+    new_pageranks = {key: 0 for key in corpus}
 
     #State of the while of the loop
     var = True
@@ -155,46 +153,28 @@ def iterate_pagerank(corpus, damping_factor):
     # Maximum variation of pageranks.
     value_to_check = 0.001
 
-    # Variable to store sum part of the equation.
-    sum_of_values = 0
-
     while var:
-        for key, value in corpus.items():
-            sum_of_values = 0
-            # Store the old value of the PageRank for this page for later comparison.
-            old_values[key] = estimated_pagerank[key]
-            for v in value:
-                # A page that has no links at all should be interpreted as having one
-                # link for every page in the corpus (including itself).
-                if len(corpus[v]) == 0:
-                    sum_of_values += estimated_pagerank[key] * (1/len(corpus))
-                else:
-                    # Sum part of the equation. PR(i) divided by the number of links linked
-                    # to that page.
-                    sum_of_values += estimated_pagerank[v] / len(corpus[v])
-                    
-            # New pagerank for page p
-            estimated_pagerank[key] = probability_random + (damping_factor * sum_of_values)
+        for key in corpus:
+            # Variable that stores the summation of all PR(i) / NumLinks(i).
+            summation = 0
+            for subpages in corpus:
+                # A page that has no links at all should be interpreted as having one link
+                # for every page in the corpus (including itself).
+                if len(corpus[subpages]) == 0:
+                    summation += estimated_pagerank[subpages] / len(corpus)
+                elif key in corpus[subpages]:
+                    summation += estimated_pagerank[subpages] / len(corpus[subpages])
+            new_pageranks[key] = probability_random + (damping_factor * summation)
 
-        # The control_variable makes sure that the page ranks sum to 1, otherwise
-        # they can sum up to less or greater than 1.
-        control_variable = sum(estimated_pagerank.values())
-
-        for page, pagerank in estimated_pagerank.items():
-            estimated_pagerank[page] = pagerank / control_variable
-
-        # We iterate through the old values and new values and if the difference
-        # between them is higher than 0.001 we continue with the while loop.
-        for (k,v), (k2,v2) in zip(estimated_pagerank.items(), old_values.items()):
-            if abs(estimated_pagerank[k] - old_values[k]) > value_to_check:
-                var = True
-                break
-            else:
+        
+        for keys in estimated_pagerank:
+            if abs(new_pageranks[keys] - estimated_pagerank[keys]) <= value_to_check:
                 var = False
-                continue
-    print("Iteration: ", sum(estimated_pagerank.values()))
+                break
+        estimated_pagerank = new_pageranks.copy()
+            
+    print('Iteration: ', round(sum(estimated_pagerank.values()), 4))
     return estimated_pagerank
-
 
 if __name__ == "__main__":
     main()
